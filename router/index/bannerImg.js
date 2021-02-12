@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const Banner = require('../model/bannerImge')
+const Banner = require('../../model/bannerImge')
 
 
 
