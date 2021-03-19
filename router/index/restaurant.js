@@ -3,13 +3,17 @@ const router = express.Router()
 const restaurant = require('../../model/restaurant')
 const request = require('https')
 
+
+
+//获取餐厅列表
 router.get('/',(req,res)=>{
     async function test(){
         let longitude = req.query.longitude//经度
         let latitude = req.query.latitude//纬度
+        let id = req.query.id//id
         let arr = []
-        var change = []
-        const  result = await restaurant.find({},{_id:0}) 
+        let change = []
+        const  result = id ? await restaurant.find({_id:id},) : await restaurant.find({id},) 
         result.forEach(element => {
             arr.push(element.longitude + ',' + element.latitude)
         });
@@ -38,8 +42,29 @@ router.get('/',(req,res)=>{
         // console.log(change);
         res.send(change)
       })
+     
   }
       test()
+})
+
+//获取某种餐厅类型的餐厅（例如火锅，寿司）
+router.get('/type',async(req,res)=>{
+  let type = req.query.type
+   var result = await restaurant.find({
+    type: type
+  })
+
+  res.send(result)
+})
+
+//获取某个餐厅的全部信息
+router.get('/message',async(req,res)=>{
+  let id = req.query.id
+   var result = await restaurant.find({
+    _id: id
+  })
+
+  res.send(result)
 })
 
 module.exports = router
