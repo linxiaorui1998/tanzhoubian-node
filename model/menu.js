@@ -9,6 +9,8 @@ const menu = new mongoose.Schema({
     price:Number,
     sold:Number,//已卖出
     support:Number,//点赞数
+    stock:Number,//库存
+    company:String,//单位
 });
 
 const Menu = mongoose.model('Menu', menu) 

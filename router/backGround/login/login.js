@@ -30,6 +30,26 @@ router.post('/',function(req,res){
     })
 })
 
+router.post('/changePwd',function(req,res){
+    let payload = jwt.verify(req.headers.token,PRIVITE_KEY)
+    let newPwd = req.body.newPwd
+    let oldPwd = req.body.oldPwd
+    new Promise(async (resolve,reject)=>{
+        let users = await model.account.find({userName:payload.username,Pwd:oldPwd})
+        resolve(users)
+    }).then( async (users)=>{
+        if(users.length > 0) {
+            let users = await model.account.updateOne({userName:payload.username},{'$set':{Pwd:newPwd}})
+            if(users.n === 1 && users.ok === 1) {
+                res.status(200).end()
+            }
+        }else {
+            // res.send({status: 403, msg: '账号或密码错误'})
+            res.status(403).end('账号或密码错误')
+        }
+    })
+})
+
 router.get('/test',function(req,res){
     res.send('ok')
 })
@@ -71,25 +91,30 @@ router.get('/menu',function(req,res){
             let obj = {
                 menus:[
                     {
+                        icon: 'el-icon-setting',
+                        name: 'RestaurantMessage',
+                        title:'店铺信息'
+                    },
+                    {
                         icon: 'el-icon-menu',
                         name: 'MenuManage',
                         title:'菜单管理'
                     },
                     {
                         icon: 'el-icon-setting',
-                        name: 'Income',
-                        title:'收入信息'
-                    },
-                    {
-                        icon: 'el-icon-setting',
-                        name: 'RestaurantMessage',
-                        title:'店铺信息'
+                        name: 'Stock',
+                        title:'库存管理'
                     },
                     {
                         icon: 'el-icon-setting',
                         name: 'Order',
                         title:'订单信息'
-                    }
+                    },
+                    {
+                        icon: 'el-icon-setting',
+                        name: 'Income',
+                        title:'收支信息'
+                    },
                ],
                menusChild:[]
                }

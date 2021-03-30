@@ -44,4 +44,5 @@ app.use('/restauranMessage',require('./router/restaurant/discounts'))
 app.use('/backGround/login',require('./router/backGround/login/login'))
 app.use('/backGround/restaurant',require('./router/backGround/restaurant/restaurant'))
 app.use('/backGround/user',require('./router/backGround/user/user'))
+app.use('/backGround/menus',require('./router/backGround/menus/menus'))
 
