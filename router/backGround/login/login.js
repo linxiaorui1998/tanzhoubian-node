@@ -22,7 +22,11 @@ router.post('/',function(req,res){
         if(users.length > 0) {
             let token = jwt.sign({username:username},PRIVITE_KEY,{expiresIn:EXPIRESD});
             console.log(token);
-            res.send(token)
+            res.json({
+                token:token,
+                _id:users[0].RestaurantId,
+                type:users[0].type
+            })
         }else {
             // res.send({status: 403, msg: '账号或密码错误'})
             res.status(403).end()
@@ -64,7 +68,26 @@ router.get('/menu',function(req,res){
         if(users[0].type === '管理员') {
            let obj = {
             menus:[
-              
+                {
+                    icon: 'el-icon-setting',
+                    name: 'Banner',
+                    title:'轮播图管理'
+                },
+                {
+                    icon: 'el-icon-setting',
+                    name: 'Order',
+                    title:'订单管理'
+                },
+                {
+                    icon: 'el-icon-setting',
+                    name: 'Income',
+                    title:'收支信息'
+                },
+                {
+                    icon: 'el-icon-setting',
+                    name: 'Restaurant',
+                    title:'店铺管理'
+                },
            ],
            menusChild:[
             {
@@ -104,6 +127,11 @@ router.get('/menu',function(req,res){
                         icon: 'el-icon-setting',
                         name: 'Stock',
                         title:'库存管理'
+                    },
+                    {
+                        icon: 'el-icon-setting',
+                        name: 'Coupon',
+                        title:'优惠套餐'
                     },
                     {
                         icon: 'el-icon-setting',

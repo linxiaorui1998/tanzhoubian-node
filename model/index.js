@@ -5,6 +5,8 @@ var discounts = require('./discounts')
 var menu = require('./menu')
 var supported = require('./supported')
 var account = require('./account')
+var coupon = require('./coupon')
+var order = require('./order')
 
 module.exports = {
     bannerImge,
@@ -13,5 +15,7 @@ module.exports = {
     discounts,
     menu,
     supported,
-    account
+    account,
+    coupon,
+    order
 }

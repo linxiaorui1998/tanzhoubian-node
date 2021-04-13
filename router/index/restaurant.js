@@ -11,9 +11,14 @@ router.get('/',(req,res)=>{
         let longitude = req.query.longitude//经度
         let latitude = req.query.latitude//纬度
         let id = req.query.id//id
+        let cuisines = req.query.cuisine
+        console.log(cuisines);
         let arr = []
         let change = []
-        const  result = id ? await restaurant.find({_id:id},) : await restaurant.find({id},) 
+        const  result = id ? 
+        (cuisines  ? await restaurant.find({_id:id,cuisine:cuisines}) : await restaurant.find({_id:id}) )://有id
+         (cuisines ? await restaurant.find({id,cuisine:cuisines}) : await restaurant.find({id})  )
+        console.log(result,"粤菜");
         result.forEach(element => {
             arr.push(element.longitude + ',' + element.latitude)
         });
@@ -63,7 +68,6 @@ router.get('/message',async(req,res)=>{
    var result = await restaurant.find({
     _id: id
   })
-
   res.send(result)
 })
 

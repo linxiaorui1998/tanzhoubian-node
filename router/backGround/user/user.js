@@ -51,14 +51,21 @@ router.post('/addUser',function(req,res){
     }
     console.log(obj);
     new Promise(async (resolve,reject)=>{
-        let users = await model.account.create(obj)
-        resolve(users)
-    }).then((users)=>{     
-        if(users) {
+        let users = await model.account.find({userName: req.body.userName})
+        if(users.length > 0) {
+            reject()
+        }else{
+            let users1 = await model.account.create(obj)
+            resolve(users1)
+        }
+    }).then((users1)=>{     
+        if(users1) {
             res.status(200).end()
         }else {
             res.status(500).end()
         }
+    },()=>{
+        res.status(403).send("账户已存在")
     })
 })
 
@@ -85,7 +92,6 @@ router.post('/updateUser',function(req,res){
         type: req.body.type,
         RestaurantName: req.body.RestaurantName,
     }
-    // console.log(obj);
     new Promise(async (resolve,reject)=>{
         let users = await model.account.updateOne({_id:req.body._id},{'$set':obj})
         resolve(users)
