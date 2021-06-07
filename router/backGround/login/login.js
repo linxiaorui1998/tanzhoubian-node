@@ -88,6 +88,11 @@ router.get('/menu',function(req,res){
                     name: 'Restaurant',
                     title:'店铺管理'
                 },
+                {
+                    icon: 'el-icon-setting',
+                    name: 'Settled',
+                    title:'入驻申请'
+                },
            ],
            menusChild:[
             {
@@ -142,6 +147,11 @@ router.get('/menu',function(req,res){
                         icon: 'el-icon-setting',
                         name: 'Income',
                         title:'收支信息'
+                    },
+                    {
+                        icon: 'el-icon-setting',
+                        name: 'ApplyRefund',
+                        title:'退款处理'
                     },
                ],
                menusChild:[]

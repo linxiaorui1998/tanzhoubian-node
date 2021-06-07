@@ -25,28 +25,15 @@ router.post('/',function(req,res){
                 let users = await User.find({openid:result.openid})
                 if(users.length > 0) {
                     try {
-                        await User.updateOne(
-                            {
-                                openid: result.openid
-                            },
-                            {
-                             $set: {
-                                 session: random,
-                                 openid: result.openid,
-                                 session_key: result.session_key
-                             }
-                            },
-                        )
+                        await User.updateOne({openid: result.openid}
+                            ,{$set: {session: random,openid: result.openid
+                                ,session_key: result.session_key}},)
                     } catch (error) {
                         console.log(error);
                     }
-                 
                 }else {
-                    await User.create({
-                        session: random,
-                        openid: result.openid,
-                        session_key: result.session_key
-                    })
+                    await User.create({session: random,openid: result.openid,
+                        session_key: result.session_key})
                 }
                 resolve()
             })

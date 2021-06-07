@@ -18,11 +18,9 @@ router.get('/',(req,res)=>{
         const  result = id ? 
         (cuisines  ? await restaurant.find({_id:id,cuisine:cuisines}) : await restaurant.find({_id:id}) )://有id
          (cuisines ? await restaurant.find({id,cuisine:cuisines}) : await restaurant.find({id})  )
-        console.log(result,"粤菜");
         result.forEach(element => {
             arr.push(element.longitude + ',' + element.latitude)
         });
-        arr.join('|')
         let key = '6325483d7a196109808539ae8bf3f732'
         let url = `https://restapi.amap.com/v3/distance?origins=${arr.join('|')}&destination=${longitude},${latitude}&key=${key}`
         let result1 = null
@@ -33,17 +31,22 @@ router.get('/',(req,res)=>{
               for(let i in result) {
                 let obj = {}
                 obj = JSON.parse(JSON.stringify(result[i]))
-                obj.distance = result1[i].distance / 1000 + "km"
-                change.push(obj)
+                console.log(result1[i],"距离");
+                if(result1[i]) {
+                   obj.distance = result1[i].distance / 1000 + "km"
+                    change.push(obj)
+                change.sort((a,b)=>{
+                  return  a.distance.split('km')[0] - b.distance.split('km')[0]
+                })
+                }
+               
               }
              resolve()
            })
         })
         })
       promise.then(()=>{
-        change.sort((a,b)=>{
-          return  a.distance.split('km')[0] - b.distance.split('km')[0]
-        })
+       
         // console.log(change);
         res.send(change)
       })

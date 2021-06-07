@@ -7,6 +7,9 @@ var supported = require('./supported')
 var account = require('./account')
 var coupon = require('./coupon')
 var order = require('./order')
+var applyRefund = require('./applyRefund')
+var comment = require('./comment')
+var settled = require('./settled')
 
 module.exports = {
     bannerImge,
@@ -17,5 +20,8 @@ module.exports = {
     supported,
     account,
     coupon,
-    order
+    order,
+    applyRefund,
+    comment,
+    settled
 }

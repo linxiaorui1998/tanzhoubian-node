@@ -8,7 +8,10 @@ const jwt = require("jsonwebtoken");
 
 app.use('/backGround/*',function (req, res, next) {
     // 我这里知识把登陆和注册请求去掉了，其他的多有请求都需要进行token校验 
-        if (req.baseUrl != '/backGround/login' && req.baseUrl != '/backGround/uploadFile/upload_excel') {
+        if (req.baseUrl != '/backGround/login'
+         && req.baseUrl != '/backGround/uploadFile/upload_excel'
+         && req.baseUrl != '/backGround/uploadFile/dowload_excel'
+         && req.baseUrl != '/backGround/uploadFile/upload2') {
             let token = req.headers.token;
             if(token === undefined) {
                 res.status(403).send('登录已过期,请重新登录')
@@ -43,12 +46,20 @@ app.use('/city',require('./router/index/city'))
 app.use('/login',require('./router/index/login'))
 app.use('/search',require('./router/restaurant/search'))
 app.use('/order',require('./router/order/order'))
+app.use('/refund',require('./router/order/applyRefund'))
 app.use('/restaurantList',require('./router/index/restaurant'))
 app.use('/restauranMessage',require('./router/restaurant/discounts'))
+app.use('/comment',require('./router/comment/comment'))
+app.use('/settled',require('./router/settled/settled'))
 app.use('/backGround/login',require('./router/backGround/login/login'))
-app.use('/backGround/restaurant',require('./router/backGround/restaurant/restaurant'))
 app.use('/backGround/user',require('./router/backGround/user/user'))
 app.use('/backGround/menus',require('./router/backGround/menus/menus'))
 app.use('/backGround/coupon',require('./router/backGround/coupon/coupon'))
+app.use('/backGround/restaurant',require('./router/backGround/restaurant/restaurant'))
 app.use('/backGround/uploadFile',require('./router/backGround/uploadFile/uploadFile'))
+app.use('/backGround/banner',require('./router/backGround/banner/banner'))
+app.use('/backGround/income',require('./router/backGround/income/income'))
+
+
+
 

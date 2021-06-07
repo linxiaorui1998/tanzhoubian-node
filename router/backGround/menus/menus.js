@@ -73,7 +73,7 @@ router.post('/delMenus',function(req,res){
 router.post('/editMenus',function(req,res){
     // let payload = jwt.verify(req.headers.token,PRIVITE_KEY)
     let obj = {
-        image:'',
+        image:req.body.image,
         name:req.body.name,
         introduce:req.body.introduce,//说明
         guide:req.body.guide,
@@ -83,6 +83,7 @@ router.post('/editMenus',function(req,res){
         stock: req.body.stock,//库存
         company: req.body.company,//单位
     }
+    console.log(obj,"canshu ");
     new Promise(async (resolve,reject)=>{
         let users = await model.menu.updateOne({_id:req.body._id},{'$set':obj})
         console.log(users);

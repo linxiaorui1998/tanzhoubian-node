@@ -36,6 +36,7 @@ router.get('/allRestaurant',function(req,res){
     })
 })
 
+
 //批量添加商家信息
 router.post('/addRestaurants',function(req,res){
     let arr = req.body.arr
@@ -53,6 +54,7 @@ router.post('/addRestaurants',function(req,res){
 // 设置商家信息
 router.post('/setRestaurantMessage',function(req,res){
     let obj = req.body
+    console.log(obj);
     new Promise(async (resolve,reject)=>{
         let users =  await model.restaurant.updateOne({_id:obj._id},{'$set':obj})
         resolve(users)
@@ -76,7 +78,6 @@ router.post('/delRestaurant',function(req,res){
 router.post('/setMessage',function(req,res){
     let payload = jwt.verify(req.headers.token,PRIVITE_KEY)
     let obj = req.body
-    console.log(payload);
     new Promise(async (resolve,reject)=>{
         let users = await model.account.find({userName:payload.username})
         resolve(users)
@@ -89,4 +90,6 @@ router.post('/setMessage',function(req,res){
         }
     })
 })
+
+
 module.exports = router

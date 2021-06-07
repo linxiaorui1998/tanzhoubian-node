@@ -31,20 +31,33 @@ router.get('/local',(req,res)=>{
 
 router.get('/selCity',(req,res)=>{
     let address = req.query.address
+    console.log(address);
     let result = null
     let  key = '6325483d7a196109808539ae8bf3f732'
     let url = `https://restapi.amap.com/v3/geocode/geo?key=${key}&address=${address}`
     let promise = new Promise((resolve,reject)=>{
         request.get(url, function(res){
             res.on('data',(data)=>{
-              result = JSON.parse(data.toString()).geocodes[0].location
-              resolve() 
-             console.log(result,"地址成功");
-           })
+                let str = JSON.parse(data.toString()).geocodes
+                if(str.length > 0) {
+                    result = str[0].location
+                    resolve() 
+                }else{
+                    reject()
+                 }
+                })     
         })
     })
     promise.then(function(){
-        res.send(result)
+        res.send({
+            status:200,
+            message: result
+        })
+    },()=>{
+        res.send({
+            status:403,
+            message:'地址填写错误'
+        })
     })
 })
 
